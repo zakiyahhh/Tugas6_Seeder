@@ -5,8 +5,8 @@
   "main": "seeder.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "check-db-connection": "nodeman index.js check-db-connection",
-    "reset-db": "",
+    "check-db-connection": "node index.js check-db-connection",
+    "reset-db": "node index.js reset-db",
     "bulk-insert": "",
     "get-all": ""
   },
@@ -17,6 +17,7 @@
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
     "json-server": "^1.0.0-beta.3",
+    "mongodb": "^6.10.0",
     "mongoose": "^8.7.2"
   }
 }

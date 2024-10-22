@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const fs = require("fs");
 require("dotenv").config();
 
 async function main() {
@@ -12,7 +13,7 @@ async function main() {
   /**--------------- Not allowed to be edited - end - --------------------- */
 
   // Connect to MongoDB
-  await mongoose.connect(mongoUri, {});
+  await mongoose.connect(mongoUri);
 
   // Define a schema for the collection
   const schema = new mongoose.Schema({}, {
@@ -24,6 +25,9 @@ async function main() {
     case "check-db-connection":
       await checkConnection();
       break;
+    case 'reset-db':
+      await resetDb();
+      break;
       // TODO: Buat logic fungsionalitas yg belum tersedia di bawah
     default:
       throw Error("command not found");
@@ -33,6 +37,7 @@ async function main() {
   return;
 }
 
+// To check MongoDB connection
 async function checkConnection() {
   console.log("check db connection started...");
   try {
@@ -43,5 +48,18 @@ async function checkConnection() {
   }
   console.log("check db connection ended...");
 }
+
+// To reset the database
+const resetDb = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI);
+    await User.deleteMany({});
+    console.log('Database reset successfully');
+  } catch (error) {
+    console.error('Failed to reset database', error);
+  } finally {
+    mongoose.disconnect();
+  }
+};
 
 main();
