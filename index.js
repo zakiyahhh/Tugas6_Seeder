@@ -31,6 +31,9 @@ async function main() {
     case 'bulk-insert':
       await bulkInsert(Model);
       break;
+    case 'get-all':
+      await getAll(Model);
+      break;
       // TODO: Buat logic fungsionalitas yg belum tersedia di bawah
     default:
       throw Error("command not found");
@@ -72,6 +75,17 @@ const bulkInsert = async (Model) => {
     console.log("Bulk insert successful!");
   } catch (error) {
     console.error("Bulk insert failed:", error);
+  }
+};
+
+// To get all documents from the collection
+const getAll = async (Model) => {
+  console.log("fetching all data...");
+  try {
+    const docs = await Model.find({});
+    console.log("Data found:", docs);
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
   }
 };
 
