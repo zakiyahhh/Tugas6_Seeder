@@ -28,6 +28,9 @@ async function main() {
     case 'reset-db':
       await resetDb(Model);
       break;
+    case 'bulk-insert':
+      await bulkInsert(Model);
+      break;
       // TODO: Buat logic fungsionalitas yg belum tersedia di bawah
     default:
       throw Error("command not found");
@@ -49,7 +52,7 @@ async function checkConnection() {
   console.log("check db connection ended...");
 }
 
-// To reset the database
+// To reset database
 const resetDb = async (Model) => {
   try {
     await Model.deleteMany({});
@@ -58,4 +61,18 @@ const resetDb = async (Model) => {
     console.error('Failed to reset database', error);
   };
 }
+
+// To bulk insert data from seed.json
+const bulkInsert = async (Model) => {
+  console.log("bulk inserting data...");
+  try {
+    // Baca data dari seed.json
+    const data = JSON.parse(fs.readFileSync("seed.json", "utf-8"));
+    await Model.insertMany(data);
+    console.log("Bulk insert successful!");
+  } catch (error) {
+    console.error("Bulk insert failed:", error);
+  }
+};
+
 main();
