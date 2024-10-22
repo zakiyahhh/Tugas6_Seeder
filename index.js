@@ -12,18 +12,19 @@ async function main() {
   /**--------------- Not allowed to be edited - end - --------------------- */
 
   // Connect to MongoDB
-  await mongoose.connect(mongoUri, {
-  });
+  await mongoose.connect(mongoUri, {});
 
   // Define a schema for the collection
-  const schema = new mongoose.Schema({}, { strict: false });
+  const schema = new mongoose.Schema({}, {
+    strict: false
+  });
   const Model = mongoose.model(collection, schema);
 
   switch (command) {
     case "check-db-connection":
       await checkConnection();
       break;
-    // TODO: Buat logic fungsionalitas yg belum tersedia di bawah
+      // TODO: Buat logic fungsionalitas yg belum tersedia di bawah
     default:
       throw Error("command not found");
   }
