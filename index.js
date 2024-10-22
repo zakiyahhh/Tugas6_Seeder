@@ -26,7 +26,7 @@ async function main() {
       await checkConnection();
       break;
     case 'reset-db':
-      await resetDb();
+      await resetDb(Model);
       break;
       // TODO: Buat logic fungsionalitas yg belum tersedia di bawah
     default:
@@ -50,16 +50,12 @@ async function checkConnection() {
 }
 
 // To reset the database
-const resetDb = async () => {
+const resetDb = async (Model) => {
   try {
-    await mongoose.connect(MONGODB_URI);
-    await User.deleteMany({});
+    await Model.deleteMany({});
     console.log('Database reset successfully');
   } catch (error) {
     console.error('Failed to reset database', error);
-  } finally {
-    mongoose.disconnect();
-  }
-};
-
+  };
+}
 main();
